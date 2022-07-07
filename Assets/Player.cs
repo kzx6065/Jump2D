@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(jumpForce, ForceMode2D.Impulse);
         }
