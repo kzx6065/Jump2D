@@ -13,13 +13,17 @@ public class Block : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //블럭 이동 멈추기.
+        
         if (collision.collider.CompareTag("Player") == false)
             return;
 
+        //블럭 이동 멈추기.
         enabled = false;
 
         //다음 블럭 나오게 하기.
+        GameManager.instance.waitNextBlock = false;
+        GameManager.instance.SetNextLevel();
+
         //점수 추가하기
     }
 }
