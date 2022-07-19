@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyButtons;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,28 @@ using UnityEngine;
 public enum Direction {Right, Left}
 public class GameManager : MonoBehaviour
 {
+    //Coroutine myCoHandle; //코루틴 샘플
+    //[Button]
+    //void CoStart()
+    //{
+    //    print("CoStart");
+    //    myCoHandle = StartCoroutine(MyCo());
+    //}
+    //[Button]
+    //void CoStop()
+    //{
+    //    StopCoroutine(myCoHandle);
+    //}
+
+    //IEnumerator MyCo()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(1);
+    //        print(Time.time);
+    //    }
+    //}
+
     static public GameManager instance;  //싱글톤 패턴, 타 클래스에서 접근 가능
     private void Awake() //생성되었을 때 가장 먼저 실행.
     {
@@ -43,7 +66,13 @@ public class GameManager : MonoBehaviour
             bestScore = score;
         }
         gameOverUI.ShowScore(score, bestScore);
+
+        StopCo();
+        gameState = GameStateType.GameOver;
     }
+    public enum GameStateType {BeforePlay ,Play, GameOver}
+
+    public GameStateType gameState = GameStateType.BeforePlay;
 
     private float initY = -3;
     private float level = 0;
@@ -51,9 +80,31 @@ public class GameManager : MonoBehaviour
     public float offsetX = 5; //블럭이 생성되는 위치
     public float blockSpeed = 3;
 
-    private IEnumerator Start()
+    Coroutine spawnBlockCoHandle;
+    
+    private void Start()
     {
+        spawnBlockCoHandle = StartCoroutine(SpawnBlockCo());
+    }
+    void StopCo()
+    {
+        StopCoroutine(spawnBlockCoHandle);
+    }
+
+    public TextMeshProUGUI countdownText;
+    private IEnumerator SpawnBlockCo()
+    {
+        gameState = GameStateType.BeforePlay;
+        countdownText.text = "3";
+        yield return new WaitForSeconds(1);
+        countdownText.text = "2";
+        yield return new WaitForSeconds(1);
+        countdownText.text = "1";
+        yield return new WaitForSeconds(1);
+        countdownText.gameObject.SetActive(false);
+
         scoreText.text = "";
+        gameState = GameStateType.Play;
         while (true)
         {
             waitNextBlock = true;

@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.madsbangh.easybuttons": {
+      "version": "file:C:/Users/USER/Desktop/EasyButtons-master/EasyButtons-master/Assets/EasyButtons",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.5",
       "depth": 1,

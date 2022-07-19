@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.instance.gameState != GameManager.GameStateType.Play) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(jumpForce, ForceMode2D.Impulse);
