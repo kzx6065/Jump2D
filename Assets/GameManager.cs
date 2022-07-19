@@ -34,11 +34,15 @@ public class GameManager : MonoBehaviour
     private void Awake() //생성되었을 때 가장 먼저 실행.
     {
         instance = this; //인스턴스 값에 자신 할당.
+
+        bestScore = PlayerPrefs.GetInt("bestScore");
     }
 
     private void OnDestroy() //오브젝트가 파괴되었을 때 실행.
     {
         instance = null; //파괴되었을 때 null값 전환
+        PlayerPrefs.SetInt("bestScore", bestScore);
+        PlayerPrefs.Save();
     }
     // 블럭 왼쪽에서 스폰
     // 오른쪽에서 스폰
