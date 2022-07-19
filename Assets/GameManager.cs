@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool waitNextBlock = true;
 
     public int score;
+    public int bestScore;
     public TextMeshProUGUI scoreText;
     internal void SetNextLevel()
     {
@@ -34,9 +35,14 @@ public class GameManager : MonoBehaviour
         //ui에 score 표시하기.
         scoreText.text = score.ToString();
     }
+    public GameOverUI gameOverUI;
     internal void GameOver()
     {
-        throw new NotImplementedException();
+        if(score > bestScore)
+        {
+            bestScore = score;
+        }
+        gameOverUI.ShowScore(score, bestScore);
     }
 
     private float initY = -3;
